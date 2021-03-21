@@ -1,14 +1,6 @@
 /*
- Guia_0201 - v0.0. - __ / __ / _____
- Author: _____________________
- Para compilar em uma janela de comandos (terminal):
-
- No Linux : gcc -o Guia0201 ./Guia0201.cpp
- No Windows: gcc -o Guia0201.exe Guia0201.cpp
- Para executar em uma janela de comandos (terminal):
-
- No Linux : ./Guia0201
- No Windows: Guia0201
+ Matricula: 733641
+ Author: LUCA DE ALENCAR SALAZAR PRIMO
 */
 // lista de dependencias
 #include "karel.hpp"
