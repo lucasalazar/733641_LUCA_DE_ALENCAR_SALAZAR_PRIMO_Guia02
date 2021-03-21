@@ -20,7 +20,8 @@
 */
 void decorateWorld(const char *fileName)
 {
-     // colocar paredes no mundo
+    // colocar paredes no mundo
+    // colocar paredes no mundo
     world->set(2, 3, VWALL);
     world->set(2, 4, VWALL);
     world->set(2, 5, VWALL);
@@ -51,11 +52,19 @@ void decorateWorld(const char *fileName)
 
     // colocar um marcador no mundo
     world->set(3, 3, BEEPER);
+    world->set(3, 3, BEEPER);
+    world->set(3, 3, BEEPER);
     world->set(4, 3, BEEPER);
     world->set(4, 3, BEEPER);
+    world->set(4, 3, BEEPER);
     world->set(5, 3, BEEPER);
     world->set(5, 3, BEEPER);
     world->set(5, 3, BEEPER);
+    world->set(4, 4, BEEPER);
+    world->set(4, 4, BEEPER);
+    world->set(5, 4, BEEPER);
+    world->set(5, 4, BEEPER);
+    world->set(5, 5, BEEPER);
     // salvar a configuracao atual do mundo
     world->save(fileName);
 } // decorateWorld ( )
@@ -101,7 +110,7 @@ public:
             move();
         } // end if
     }     // end moveN( )
-/**
+          /**
  * pickBeepers - Metodo para coletar marcadores.
  */
     int pickBeepers()
@@ -117,16 +126,63 @@ public:
         } // end while
         return (n);
     } // end pickBeepers( )
-    void putRightBeepers(){
-        if(areYouHere(9,1)){
-            while (beepersInBag())
-            {
-                putBeeper();
-            }
+
+    void putBeepers()
+    {
+        while (beepersInBag())
+        {
+            putBeeper();
         }
     }
-    
-    void doTask(){
+    /**
+    * recordActions - Metodo para mover o robot interativamente
+    * e guardar a descricao a tarefa em arquivo
+    * @param fileName - nome do arquivo
+    */
+    void recordActions(const char *fileName)
+    {
+        //definir dados
+        int x = xAvenue(); //obter posicao atual(avenue)
+        int y = yStreet(); //obter posicao atual(street)
+
+        //definir arquivo onde gravar comandos
+        std::ofstream archive(fileName);
+
+        //testar se opcao valida
+        if (nextToABeeper())
+        {
+            //guardar o comando em arquivo e salta uma linha depois
+            archive << x << "\n";
+            archive << y << "\n";
+        } //end if
+
+        //fechar o arquivo INDISPENSAVEL para a gravacao
+        archive.close();
+    } //end recordActions()
+
+    /**
+    * appendActions - Metodo para acrescentar comandos ao arquivo e traduzi-los
+    * @param fileName - nome do arquivo
+    */
+    void appendActions(const char *fileName)
+    {
+        //definir dados
+        int x = xAvenue(); //obter posicao atual(avenue)
+        int y = yStreet(); //obter posicao atual(street)
+
+        //definir arquivo para receber acrescimos ao final
+        std::fstream archive(fileName, std::ios::app);
+
+        if (nextToABeeper())
+        {
+            archive << x << "\n";
+            archive << y << "\n";
+        } //end if
+        archive.close();
+    } //end appendActions()
+
+    void doTask()
+    {
         move();
         turnLeft();
         moveN(8);
@@ -134,44 +190,55 @@ public:
         moveN(2);
         turnRight();
         move();
-        turnRight();
-        move();
         turnLeft();
-        moveN(5);
+        move();
+        turnRight();
+        moveN(3);
+        recordActions("Tarefa0214b.txt");
         pickBeepers();
-        turnLeft();
-        turnLeft();
-        moveN(5);
-        turnRight();
         move();
-        turnRight();
-        moveN(5);
+        appendActions("Tarefa0214b.txt");
         pickBeepers();
-        turnLeft();
-        turnLeft();
-        moveN(5);
-        turnRight();
         move();
-        turnRight();
-        moveN(5);
+        appendActions("Tarefa0214b.txt");
         pickBeepers();
         turnLeft();
         turnLeft();
         moveN(5);
         turnLeft();
         move();
+        turnLeft();
+        moveN(4);
+        appendActions("Tarefa0214b.txt");
+        pickBeepers();
+        move();
+        appendActions("Tarefa0214b.txt");
+        pickBeepers();
+        turnLeft();
+        turnLeft();
+        moveN(5);
+        turnLeft();
+        move();
+        turnLeft();
+        moveN(5);
+        appendActions("Tarefa0214b.txt");
+        pickBeepers();
+        turnLeft();
+        turnLeft();
+        moveN(5);
         turnRight();
         move();
+        turnLeft();
+        move();
         turnRight();
-        moveN(5);
+        moveN(3);
         turnRight();
         moveN(8);
-        putRightBeepers();
+        putBeepers();
         turnRight();
-        moveN(8);
+        moveN(6);
         turnLeft();
         turnLeft();
-        turnOff();
     }
 }; // end class MyRobot
 /**
@@ -185,11 +252,11 @@ int main()
     // antes de qualquer outra coisa
     // (depois de criado, podera' ser comentado)
     world->create(""); // criar o mundo
-    decorateWorld("Guia0213.txt");
+    decorateWorld("Guia0214.txt");
     world->show();
     // preparar o ambiente para uso
     world->reset();              // limpar configuracoes
-    world->read("Guia0213.txt"); // ler configuracao atual para o ambiente
+    world->read("Guia0214.txt"); // ler configuracao atual para o ambiente
     world->show();               // mostrar a configuracao atual
     set_Speed(1);                // definir velocidade padrao
                                  // criar robo
